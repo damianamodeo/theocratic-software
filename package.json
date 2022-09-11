@@ -26,10 +26,10 @@
     "workbox-streams": "^6.5.4"
   },
   "scripts": {
-    "start-orderly": "REACT_APP_VERSION=orderly react-scripts start",
-    "start-proclaim": "REACT_APP_VERSION=proclaim react-scripts start",
-    "build-orderly": "REACT_APP_VERSION=orderly BUILD_PATH='./build/orderly' react-scripts build",
-    "build-proclaim": "REACT_APP_VERSION=proclaim BUILD_PATH='./build/proclaim' react-scripts build",
+    "start-orderly": "REACT_APP_VERSION=Orderly react-scripts start",
+    "start-proclaim": "REACT_APP_VERSION=Proclaim react-scripts start",
+    "build-orderly": "REACT_APP_VERSION=Orderly BUILD_PATH='./build/orderly' react-scripts build",
+    "build-proclaim": "REACT_APP_VERSION=Proclaim BUILD_PATH='./build/proclaim' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy-firebase": "firebase deploy --only hosting"

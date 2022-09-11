@@ -9,7 +9,7 @@ import { Proclaim } from "./proclaim/proclaim";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    {process.env.REACT_APP_VERSION === "orderly" ? <Orderly /> : <Proclaim />}
+    {process.env.REACT_APP_VERSION === "Orderly" ? <Orderly /> : <Proclaim />}
   </React.StrictMode>
 );
 
