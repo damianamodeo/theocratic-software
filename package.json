@@ -7,6 +7,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "env-cmd": "^10.1.0",
+    "firebase": "^9.9.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -30,7 +31,8 @@
     "build-orderly": "REACT_APP_VERSION=orderly BUILD_PATH='./build/orderly' react-scripts build",
     "build-proclaim": "REACT_APP_VERSION=proclaim BUILD_PATH='./build/proclaim' react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy-firebase": "firebase deploy --only hosting"
   },
   "eslintConfig": {
     "extends": [
