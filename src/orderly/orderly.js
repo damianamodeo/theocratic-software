@@ -2,6 +2,6 @@ import React from 'react'
 
 export const Orderly = () => {
   return (
-    <div>Orderly</div>
+    <div className="text-2xl font-bold m-14 font-noto">Orderly</div>
   )
 }
