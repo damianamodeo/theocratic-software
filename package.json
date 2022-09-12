@@ -32,7 +32,9 @@
     "build-proclaim": "REACT_APP_VERSION=Proclaim BUILD_PATH='./build/proclaim' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy-firebase": "firebase deploy --only hosting"
+    "deploy-firebase": "firebase deploy --only hosting",
+    "generate-assets-orderly": "npx pwa-asset-generator public/logo-Orderly.svg public/icons-Orderly -b '#4a6da7' -f true -i public/index.html -m public/manifest-Orderly.json",
+    "serve-orderly": "serve -s build/orderly"
   },
   "eslintConfig": {
     "extends": [
