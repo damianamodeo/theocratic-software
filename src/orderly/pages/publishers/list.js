@@ -3,6 +3,7 @@ import { idb } from "../../services/idb/idb";
 import { importStores } from "../../services/idb/importStores";
 import { FileInput } from "../../../common/components/inputs/file";
 import { Button } from "../../../common/components/inputs/button";
+import { Card } from "../../../common/components/containers/card";
 
 export const List = () => {
   const searchString = "";
@@ -38,11 +39,11 @@ export const List = () => {
           //   publisherDetails(publisher);
           // }}
         >
-          <div className="py-2">
+          <Card className="py-2">
             <div>
               {publisher.lastName}, {publisher.firstName}
             </div>
-          </div>
+          </Card>
         </div>
       ))}
     </>
