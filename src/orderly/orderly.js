@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from "react";
+import { Publishers } from "./pages/publishers/publishers";
 
 export const Orderly = () => {
-  return (
-    <div className="text-2xl font-bold m-14 font-noto">Orderly</div>
-  )
-}
+  const [page, setPage] = useState(<Publishers />);
+  return <>{page}</>;
+};
