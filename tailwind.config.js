@@ -39,7 +39,7 @@ module.exports = {
         "navbar": "0.6rem"
       },
       spacing: {
-        "navW": "3.1rem",
+        "navHeight": "3.1rem",
       }
     },
   },

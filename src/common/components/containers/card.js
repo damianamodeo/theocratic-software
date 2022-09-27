@@ -6,7 +6,7 @@ export const Card = ({ action, children }) => {
         grid
         bg-white 
         p-2
-        dark:bg-bgD
+        dark:bg-bgGrey
       "
       onClick={action}
     >

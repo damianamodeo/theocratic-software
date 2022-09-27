@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@containers/*": ["src/common/components/containers/*"]
+    }
+  },
+  "include": ["src"]
+}
