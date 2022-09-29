@@ -3,12 +3,12 @@ export const Content = ({ children, bgColor }) => {
 
   return (
     <>
-      <div className={styles}></div>
+      <div className={` -z-1 ${styles}`}></div>
       <div
         className="
-          landscape:m d:bottom-0 absolute inset-y-navW inset-x-0 overflow-auto
-          overscroll-y-contain px-2 md:left-navW
-          md:right-0 md:bottom-0 landscape:bottom-10 "
+          landscape:md:bottom-0 absolute inset-y-navW inset-x-0 overflow-auto
+          overscroll-y-contain md:left-navW
+          md:right-0 md:bottom-0 landscape:bottom-10  -z-1 "
       >
         {children}
       </div>

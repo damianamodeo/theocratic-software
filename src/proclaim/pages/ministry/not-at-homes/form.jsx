@@ -20,7 +20,7 @@ import { DefaultText } from "common/components/text/text";
 import { Content } from "common/components/containers/content";
 import { Accordion } from "common/components/containers/accordion";
 
-export const NotAtHomes = ({ userID }) => {
+export const Form = ({ userID }) => {
   const notAtHomes = collection(fdb, "not-at-homes");
   const [editAddressID, setEditAddressID] = useState(undefined);
   const [addresses, setAddresses] = useState([]);
@@ -159,60 +159,7 @@ export const NotAtHomes = ({ userID }) => {
         </div>
       </div>
       <div className={screen}>
-        <Button action={addAddress}>Add Address</Button>
-        <div className="my-4 grid text-center font-noto text-sm text-blue-600 dark:text-blue-200">
-          TAP ON AN ADDRESS TO EDIT IT
-        </div>
-        <div>
-          {addresses.map((address) => {
-            if (
-              address.userID == userID &&
-              (address.foundHome == undefined) &
-                (address.letterSent == undefined)
-            ) {
-              total = total + 1;
-            }
-            return address.userID == userID ? (
-              <>
-                <div
-                  className="my-4"
-                  key={address.id}
-                  onClick={() => editAddress(address)}
-                >
-                  <Card>
-                    <div>Map: {address.map}</div>
-                    <div className="py-2 text-xl">
-                      {`${address.unitNumber ? `${address.unitNumber}/` : ""}${
-                        address.houseNumber
-                      } ${address.street}, ${address.suburb}`}
-                    </div>
-                  </Card>
-                </div>
-              </>
-            ) : null;
-          })}
-
-          
-        <div className="mb-24 grid text-center font-noto text-sm text-blue-600 dark:text-blue-200">Total Addresses: {total}</div>
-        </div>
-      </div>
-      <div className={` my-6 ${screen == "visible" ? "hidden" : "visible"}`}>
-        <Button action={() => updateAddress(editAddressID)}>Update</Button>
-      </div>
-      <div className={` my-6 ${screen == "visible" ? "hidden" : "visible"}`}>
-        <Button action={() => deleteAddress(editAddressID)}>Delete</Button>
-      </div>
-      <div className={` my-6 ${screen == "visible" ? "hidden" : "visible"}`}>
-        <Button action={() => done(editAddressID, { foundHome: "not home" })}>
-          Not Home
-        </Button>
-      </div>
-      <div className={` my-6 ${screen == "visible" ? "hidden" : "visible"}`}>
-        <Button
-          action={() => done(editAddressID, { letterSent: "letter sent" })}
-        >
-          Letter Sent
-        </Button>
+        <Button action={addAddress}>Submit New Address</Button>
       </div>
     </Content>
   );
