@@ -6,109 +6,63 @@ import {
   updateDoc,
   doc,
   deleteDoc,
-  onSnapshot,
-  query,
-  where,
   serverTimestamp,
-  orderBy,
 } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { TextInput } from "common/components/inputs/text";
 import { NumberInput } from "common/components/inputs/number.js";
-import { Card } from "common/components/containers/card";
-import { DefaultText } from "common/components/text/text";
-import { Content } from "common/components/containers/content";
-import { Accordion } from "common/components/containers/accordion";
 
-export const Form = ({ userID }) => {
+export const Form = ({ userID, type, setContent, address, setAddress }) => {
   const notAtHomes = collection(fdb, "not-at-homes");
-  const [editAddressID, setEditAddressID] = useState(undefined);
-  const [addresses, setAddresses] = useState([]);
-  const [newMap, setNewMap] = useState("");
-  const [newSuburb, setNewSuburb] = useState("");
-  const [newStreet, setNewStreet] = useState("");
-  const [newHouseNumber, setNewHouseNumber] = useState("");
-  const [newUnitNumber, setNewUnitNumber] = useState("");
-  const [active, setActive] = useState("");
-  const [screen, setScreen] = useState("visible");
-  let total = 0;
+  const [newMap, setNewMap] = useState(address.map);
+  const [newSuburb, setNewSuburb] = useState(address.suburb);
+  const [newStreet, setNewStreet] = useState(address.street);
+  const [newHouseNumber, setNewHouseNumber] = useState(
+    type == "Submit" ? "" : address.houseNumber
+  );
+  const [newUnitNumber, setNewUnitNumber] = useState(
+    type == "Submit" ? "" : address.UnitNumber
+  );
 
-  const addAddress = async () => {
+  const add = async () => {
     await addDoc(notAtHomes, {
       map: newMap,
       suburb: newSuburb,
       street: newStreet,
-      houseNumber: Number(newHouseNumber),
-      unitNumber: Number(newUnitNumber),
+      houseNumber: newHouseNumber,
+      unitNumber: newUnitNumber,
       userID: userID,
       createdAt: serverTimestamp(),
     });
     setNewHouseNumber("");
     setNewUnitNumber("");
+    setContent("list");
   };
 
-  const editAddress = (address) => {
-    setEditAddressID(address.id);
-    setNewMap(address.map);
-    setNewSuburb(address.suburb);
-    setNewStreet(address.street);
-    setNewHouseNumber(address.houseNumber);
-    setNewUnitNumber(address.unitNumber);
-    setScreen("hidden");
-  };
-
-  const updateAddress = async (id) => {
+  const update = async (id) => {
     const address = doc(fdb, "not-at-homes", id);
     const newFields = {
       map: newMap,
       suburb: newSuburb,
       street: newStreet,
       houseNumber: newHouseNumber,
-      unitNumber: newUnitNumber,
+      unitNumber: newUnitNumber || 0,
       createdAt: serverTimestamp(),
     };
     await updateDoc(address, newFields);
-
-    setScreen("visible");
+    setAddress(newFields);
+    setContent("list");
   };
 
-  const done = async (id, obj) => {
-    const address = doc(fdb, "not-at-homes", id);
-    const newFields = {
-      map: newMap,
-      suburb: newSuburb,
-      street: newStreet,
-      houseNumber: newHouseNumber,
-      unitNumber: newUnitNumber,
-      createdAt: serverTimestamp(),
-    };
-    await updateDoc(address, obj);
-
-    setScreen("visible");
-  };
-
-  const deleteAddress = async (id) => {
+  const remove = async (id) => {
     const address = doc(fdb, "not-at-homes", id);
     await deleteDoc(address);
-
-    setScreen("visible");
+    setAddress({});
+    setContent("list");
   };
 
-  useEffect(() => {
-    const q = query(notAtHomes, orderBy("createdAt", "desc"));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      setAddresses(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    });
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
   return (
-    <Content bgColor={"bg-bg dark:bg-black"}>
-      <div className={`my-8 ${screen == "visible" ? "hidden" : "visible"}`}>
-        <Button action={() => setScreen("visible")}> {"<<< Back <<<"}</Button>
-      </div>
+    <>
       <div className="grid gap-2 p-4">
         <div className="flex gap-2">
           <div className="basis-1/3">
@@ -130,22 +84,22 @@ export const Form = ({ userID }) => {
         </div>
         <div className="flex gap-2">
           <div className="basis-1/5">
-            <NumberInput
+            <TextInput
               action={(e) => {
                 setNewUnitNumber(e.target.value);
               }}
               label="Unit"
               value={newUnitNumber}
-            ></NumberInput>
+            ></TextInput>
           </div>
           <div className="basis-1/4">
-            <NumberInput
+            <TextInput
               action={(e) => {
                 setNewHouseNumber(e.target.value);
               }}
               label="House"
               value={newHouseNumber}
-            ></NumberInput>
+            ></TextInput>
           </div>
           <div>
             <TextInput
@@ -158,9 +112,29 @@ export const Form = ({ userID }) => {
           </div>
         </div>
       </div>
-      <div className={screen}>
-        <Button action={addAddress}>Submit New Address</Button>
+      <div className="flex gap-4 px-6">
+        {type == "Update" ? (
+          <Button action={() => remove(address.id)}>Delete</Button>
+        ) : null}
+        <Button
+          action={() => {
+            if (type == "Submit") {
+              add();
+            } else if (type == "Update") {
+              update(address.id);
+            }
+            setAddress({
+              map: newMap,
+              suburb: newSuburb,
+              street: newStreet,
+              houseNumber: newHouseNumber,
+              unitNumber: newUnitNumber,
+            });
+          }}
+        >
+          {type}
+        </Button>
       </div>
-    </Content>
+    </>
   );
 };
